@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>picture preview</title>
+</head>
+<body>
+<input type="file" id="imgFile" name="file" onchange="getImg()"/>
+<div id="preview"></div>
+
+<script type="text/javascript">
+    function getImg() {
+        var preview = document.getElementById('preview');
+        var files = document.getElementById("imgFile").files;
+
+        function readAndPreview(file) {
+
+            // Make sure `file.name` matches our extensions criteria
+            if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                var reader = new FileReader();
+
+                reader.addEventListener("load", function () {
+                    var image = new Image();
+                    image.height = 100;
+                    image.title = file.name;
+                    image.src = this.result;
+                    preview.appendChild(image);
+                }, false);
+
+                reader.readAsDataURL(file);
+            }
+
+        }
+
+        if (files) {
+            [].forEach.call(files, readAndPreview);
+        }
+    }
+</script>
+</body>
+
+</html>
